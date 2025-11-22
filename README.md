@@ -5,53 +5,99 @@ Built by **ElysianGo Baitullah – FaithTech Superapp Pioneer 2025**
 ---
 
 ## 📌 Overview
-**ElysianGo Mutawwif API** adalah mesin AI multilingual yang memberikan panduan real-time untuk Umrah & Haji.
+**ElysianGo Mutawwif API adalah mesin AI multilingual pertama di dunia yang memberikan panduan real-time untuk Umrah & Haji dalam 25 bahasa, menggunakan:
 
-Engine ini melayani:
-- Doa & dzikir 25 bahasa  
-- Panduan rukun, wajib, sunnah  
-- Navigasi kerumunan, keselamatan, adab & fiqh  
-- Mode **Basic** (Gratis) & **Pro** (berbasis JWT)  
-- Travel partners & global pilgrims  
+Model OpenAI GPT-4.1 & GPT-4.1-mini
 
-ElysianGo membawa FaithTech ke level dunia — superapp pertama yang menggabungkan AI, ibadah, dan ekosistem travel halal global.
+Whisper STT
 
+GPT-4o TTS
+
+MongoDB Pro Session
+
+Shopify Subscription Engine
+
+Mesin ini mendukung:
+
+🔹 Doa & dzikir 25 bahasa
+🔹 Panduan fiqh 4 mazhab
+🔹 Penjelasan rukun, wajib, sunnah
+🔹 Guidance perjalanan Haramain
+🔹 Mode Gratis (Basic) dan Pro (Berlangganan)
+🔹 Voice input + Voice output (Pro Mode)
+
+ElysianGo menjadi Superapp FaithTech pertama di dunia, memadukan AI + spiritual guidance + travel ecosystem.
 ---
 
 ## 🌐 Supported Languages (25)
-Indonesia, English, Melayu, SG English, العربية, Türkçe, Français, Español, Português, Português BR,  
-Deutsch, Русский, हिन्दी, বাংলা, اردو, 简体中文, 繁體中文, 日本語, 한국어, ไทย,  
+Indonesia, English, Melayu, Singapore English, العربية, Türkçe, Français, Español, Português, Português BR,
+Deutsch, Русский, हिन्दी, বাংলা, اردو, 简体中文, 繁體中文, 日本語, 한국어, ไทย,
 Tiếng Việt, Filipino, Kiswahili, Italiano, Nederlands.
 
 ---
 
 ## ✨ Features
+### 🟩 Basic Mode (Free)
 
-### **Basic Mode (Free)**
-- Jawaban cepat & ringkas  
-- 5 riwayat percakapan  
-- Rate limit harian  
-- Bahasa otomatis  
+- 7 pertanyaan / hari
 
-### **Pro Mode**
-- Penjelasan mendalam fiqh  
-- Semua pendapat ulama  
-- Step-by-step ritual  
-- 12 riwayat percakapan  
-- Token limit lebih besar  
-- JWT authentication  
-- Safety & navigation tips  
+- Jawaban cepat & ringkas
+
+- Model: gpt-4.1-mini
+
+- Multi-bahasa otomatis
+
+- Tidak ada voice
+
+### 🟨 Pro Mode (Premium)
+
+- Jawaban panjang & mendalam
+
+- Fiqh 4 mazhab + dalil
+
+- Model: gpt-4.1
+
+- Unlimited / kuota besar
+
+- Multi-device login
+
+- Voice Input (STT)
+
+- Voice Output (TTS MP3)
+
+- Aktivasi otomatis via Shopify
+
+### 🟦 Pro Voice Mode
+
+- Kirim audio → Whisper STT → GPT-4.1 → TTS MP3
+
+- Output audio langsung dapat diputar di browser
+
+- Ideal untuk jamaah lansia, penyandang disabilitas, atau pengguna yang lebih nyaman interaksi suara 
 
 ---
 
 ## 🏗️ Architecture
 ```mermaid
 graph TD;
-    User -->|Basic| API_Basic;
-    User -->|Pro (JWT)| API_Pro;
-    API_Basic --> OpenAI;
-    API_Pro --> OpenAI;
-    API_Pro --> MongoDB;
+    A[User Device] -->|Basic Mode| B[/api/mutawwif/basic/];
+    A -->|Pro Mode (JWT)| C[/api/mutawwif/pro/];
+    A -->|Pro Voice Mode| D[/api/mutawwif/voice/];
+
+    B --> E[OpenAI GPT-4.1 Mini];
+    C --> F[OpenAI GPT-4.1];
+    D --> G[Whisper STT + GPT-4o TTS];
+
+    C --> H[(MongoDB - Pro Users Database)];
+
+    I[Shopify Subscription] --> J[/Webhook /api/shopify/webhook/pro/];
+    J --> H;
+
+    style A fill:#fefefe,stroke:#0f0,stroke-width:2px;
+    style B fill:#eef,stroke:#06f;
+    style C fill:#efe,stroke:#0a0;
+    style D fill:#ffe,stroke:#cc0;
+    style H fill:#fff,stroke:#333,stroke-width:2px;44
 ```
 
 ---
@@ -69,20 +115,24 @@ cd elysiango-mutawwif-api
 npm install
 ```
 
-### 3️⃣ Tambahkan File `.env`
+### 3️⃣ Tambahkan File `.env template
 Buat file:
 
 ```
-PORT=4000
-OPENAI_API_KEY=YOUR_OPENAI_KEY
-MONGODB_URI=YOUR_MONGODB_ATLAS_URL
-
-JWT_SECRET=elysiango_super_secret_key
-JWT_EXPIRES_IN=30d
-
-BASIC_DAILY_LIMIT=50
-BASIC_MAX_TOKENS=800
+PORT=3020
+OPENAI_API_KEY=your_key
+MONGODB_URI=your_mongo_uri
+JWT_SECRET=your_secret
+PRO_DEFAULT_DAYS=30
+BASIC_DAILY_LIMIT=7
+BASIC_MAX_TOKENS=400
 PRO_MAX_TOKENS=2000
+B2_KEY_ID=your_key
+B2_APPLICATION_KEY=your_key
+B2_BUCKET_NAME=elysiango-storage
+B2_BUCKET_REGION=us-west-004
+B2_ENDPOINT=https://s3.us-west-004.backblazeb2.com
+SHOPIFY_WEBHOOK_SECRET=your_shopify_secret
 ```
 
 ---
@@ -91,25 +141,27 @@ PRO_MAX_TOKENS=2000
 
 ### Development
 ```bash
-npm run dev
+node server.js
 ```
 
 ### Production
 ```bash
-npm start
+pm2 start pm2.config.js
+pm2 save
+pm2 startup
 ```
 
 Server berjalan pada:
 ```
-http://localhost:4000
-```
+[http://localhost:3020
+]```
 
 ---
 
 ## 📡 API Endpoints
 
-### **Health Check**
-```http
+### 🔹 1. Health Check
+```sql
 GET /
 ```
 
@@ -118,93 +170,134 @@ Response:
 {
   "status": "ok",
   "service": "ElysianGo Mutawwif API",
-  "languages": 25,
-  "time": "2025-01-01T00:00:00Z"
+  "languages": ["id","en","ar",...]
 }
 ```
 
 ---
 
-## 🟦 Basic Mode (Free)
-
-### Endpoint
+### 🟩 2. Basic Mode (Free)
+``` bash
+POST /api/mutawwif/basic
 ```
+#### Example 
+``` json
+{
+  "message": "Apa doa masuk Masjidil Haram?",
+  "language": "id",
+  "deviceID": "hashed-device-id"
+}
+```
+
+### 🟨 3. Pro Mode (JWT Required)
+``` bash
 POST /api/mutawwif/basic
 ```
 
-### Example Request
+#### Header:
+``` makefile
+Header:
+```
+
+#### Example Request
 ```json
 {
   "message": "Apa doa ketika melihat Ka'bah?",
   "language": "id"
 }
 ```
+---
 
-### Example Response
-```json
+### 🟦 4. Pro Voice Mode
+``` bash
+POST /api/mutawwif/Voice
+```
+
+### Example Client
+```js
 {
-  "reply": "Doa ketika melihat Ka'bah adalah..."
+const fd = new FormData();
+fd.append("audio", blob, "voice.webm");
+fd.append("lang", "id");
+
+fetch("/api/mutawwif/voice", {
+  method: "POST",
+  headers: {
+    Authorization: "Bearer " + token,
+  },
+  body: fd
+});
+```
+
+#### 🔑 Output
+
+#### Endpoint
+``` json
+{
+  "reply": "...",
+  "audio": "data:audio/mpeg;base64,..."
+}
+```
+### 🛒 5. Shopify Webhook (Activate Pro Access)
+``` swift
+POST/api/shopify/webhook/pro
+```
+
+#### Shopify payload
+```
+{
+  "customer": {
+    "email": "user@example.com",
+    "first_name": "Ali",
+    "last_name": "Hassan"
+  }
+```
+Server updates Pro access automatically.
+
+### 🔑 6. Check Pro Access
+```
+{
+POST /api/mutawwif/check-pro
+ }
+```
+Body
+```
+{ "email": "user@example.com" }
+```
+
+### 🗄 B2 Storage Endpoints
+#### Upload File
+```bash
+{
+POST /api/upload
+ }
+```
+#### Delete File
+```sql
+{
+DELETE /api/delete
 }
 ```
 
----
-
-## 🟨 Pro Mode (JWT Required)
-
-### Endpoint
-```
-POST /api/mutawwif/pro
-```
-
-### Headers
-```
-Authorization: Bearer <token>
-```
-
-### Example Request
-```json
-{
-  "message": "Tolong berikan penjelasan fiqh tentang Tawaf Ifadah.",
-  "language": "id"
-}
-```
-
----
-
-## 🔑 Issue Pro Token (Admin Only)
-
-### Endpoint
-```
-POST /api/admin/issue-pro-token
-```
-
-Request:
-```json
-{
-  "email": "user@example.com",
-  "name": "Ahmad"
-}
-```
-
----
-
-## 🔐 Security
+### 🔐 Security
 - JWT Authentication untuk Pro users  
-- Rate limit berbasis IP untuk Basic  
+- Rate limit berbasis IP untuk Basic
+- Validasi Shopify HMAC 
 - Sanitasi input  
-- Semua koneksi melalui HTTPS  
-- MongoDB Atlas dengan IP whitelist
+- Validasi Shopify HMAC 
+- MongoDB Atlas secure cluster
+- B2 signed requests
 
 ---
 
-## 🤝 Contributing
-Pull-request sangat diterima!  
-Silakan fork repo ini dan ajukan perubahan via PR.
+### 🤝 Contributing
 
+Kontribusi dari komunitas global sangat diterima.
+Fork repo ini dan ajukan PR untuk pengembangan lebih lanjut.
 ---
 
-## 📜 License
+### 📜 License
 MIT License  
-© 2025 ElysianGo Baitullah – FaithTech Superapp Initiative
+© 2025 ElysianGo Baitullah – The 3FaithTech Superapp Initiative
 
 ---
