@@ -25,7 +25,7 @@
     "openai": "^4.58.1",
     "mongoose": "^8.3.1",
     "jsonwebtoken": "^9.0.2",
-    "rate-limit-flexible": "^2.5.3"
+    "rate-limiter-flexible": "^2.5.3"
   },
 
   "devDependencies": {
