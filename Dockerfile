@@ -1,20 +1,24 @@
-# --- Base image ---
-FROM node:18-alpine
+# ================================================
+# ELYSIANGO MUTAWWIF API — FINAL DOCKERFILE v3
+# Fix for Fly.io Build Failure (npm 404 / COPY error)
+# ================================================
 
-# --- Work directory ---
+FROM node:20-alpine
+
+# Set working directory
 WORKDIR /app
 
-# --- Copy package files ---
+# Copy ONLY package files first (cache layer)
 COPY package*.json ./
 
-# --- Install dependencies ---
-RUN npm install
+# Install dependencies
+RUN npm install --production
 
-# --- Copy all files ---
+# Copy rest of the source code
 COPY . .
 
-# --- Expose port ---
+# Expose port
 EXPOSE 3020
 
-# --- Start server ---
+# Start server
 CMD ["node", "server.js"]
