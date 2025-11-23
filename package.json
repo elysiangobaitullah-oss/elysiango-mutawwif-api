@@ -1,6 +1,6 @@
 {
   "name": "elysiango-mutawwif-api",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "ElysianGo Mutawwif API – AI Mutawwif Basic & Pro (25 Languages) for the ElysianGo Baitullah FaithTech Superapp.",
   "author": "Elysian Global Success – FaithTech Division",
   "license": "MIT",
@@ -8,9 +8,7 @@
 
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js",
-    "prod": "NODE_ENV=production node server.js",
-    "test": "echo \"No tests yet\""
+    "dev": "nodemon server.js"
   },
 
   "engines": {
@@ -22,10 +20,10 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "openai": "^4.0.0",
     "mongodb": "^6.8.0",
     "mongoose": "^8.3.1",
-    "jsonwebtoken": "^9.0.2",
-    "rate-limiter-flexible": "^2.4.1"
+    "jsonwebtoken": "^9.0.2"
   },
 
   "devDependencies": {
