@@ -415,9 +415,12 @@ app.post("/api/admin/issue-pro-token", async (req, res) => {
   }
 });
 
-// -------------------------------------------------------------
-// START SERVER
-// -------------------------------------------------------------
-app.listen(port, () => {
-  console.log(`🚀 Mutawwif API running on port ${port}`);
+// ======================================================================
+// START SERVER — FINAL CLEAN VERSION
+// ======================================================================
+
+const PORT = process.env.PORT || 3020;
+
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`🟢 Mutawwif API running on port ${PORT}`);
 });
