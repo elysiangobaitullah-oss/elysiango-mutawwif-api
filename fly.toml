@@ -1,24 +1,16 @@
 app = "elysiango-mutawwif-api"
 primary_region = "sin"
 
-[build]
-dockerfile = "./Dockerfile"
-
 [env]
-PORT = "3020"
-NODE_ENV = "production"
+  PORT = "3020"
+  NODE_ENV = "production"
 
 [[services]]
-internal_port = 3020
-protocol = "tcp"
-
-  [services.concurrency]
-  type = "requests"
-  soft_limit = 20
-  hard_limit = 30
+  internal_port = 3020
+  protocol = "tcp"
 
   [[services.ports]]
-  port = 80
+    port = 80
 
   [[services.ports]]
-  port = 443
+    port = 443
